@@ -12,10 +12,11 @@ router.route("/new")
 
 router.route("/:id")
     .get(listingController.showListing)
-    .put(listingController.updateListing);
+    .put(listingController.updateListing)
+    .delete(listingController.destroyListing);
 
 router.route("/:id/edit")
-    .get(listingController.renderEditForm)
+    .get(listingController.renderEditForm);
     
     
     

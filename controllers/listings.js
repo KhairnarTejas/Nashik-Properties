@@ -36,3 +36,10 @@ module.exports.updateListing = async(req, res) => {
     await listing.save();
     res.redirect(`/listings/${id}`);
 }
+
+module.exports.destroyListing = async(req,res) => {
+    let {id} = req.params;
+    let deletedListing = await Listing.findByIdAndDelete(id);
+    console.log(deletedListing);
+    res.redirect("/listings");
+}

@@ -11,17 +11,18 @@
         
         <p class="card-text">Designed by: <%=listing.designed_by%></p>
         <p class="card-text">Legal Adviser: <%=listing.legal_adviser%></p>
-        <a
-      href="/listings/<%= listing._id%>/edit"
-      class="btn btn-dark col-1 offset-3 edit-btn"
-      >Edit</a>
-        
-        <button class="btn">Delete</button>
-      </div>
 
-      <form action="">
-          
-      </form>
-      
+        <div>
+          <a
+          href="/listings/<%= listing._id%>/edit"
+          class="btn btn-dark col-1 offset-3 edit-btn"
+          >Edit</a>
+
+          <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
+            <button class="btn btn-dark col-1 offset-5 edit-btn">Delete</button>
+          </form>
+
+        </div>
+      </div>
     </div>
   </div>
