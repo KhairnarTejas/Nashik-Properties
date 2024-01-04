@@ -5,9 +5,12 @@ const listingController = require("../controllers/listings.js");
 
 router.route("/")
     .get(listingController.index)
-    .post()
+    .post(listingController.createListing);
 
 router.route("/new")
     .get(listingController.renderNewForm);
 
-    module.exports=router;
+    
+    
+    
+module.exports=router;

@@ -7,6 +7,7 @@ const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
 const ejsMate = require("ejs-mate");
+const MongoStore = require("connect-mongo");
 
 
 dbUrl = process.env.ATLASDB_URL;
@@ -18,8 +19,9 @@ main()
     .catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect(dbUrl);
+    await  mongoose.connect(dbUrl);
 }
+
 
 
 
@@ -42,6 +44,18 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 app.use("/listings",listingRouter);
 
+
+const store = MongoStore.create({
+    mongoUrl : dbUrl,
+    crypto:{
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24 * 3600,
+});
+
+store.on("error", () => {
+    console.log("ERROR in MONGO SESSION STORE", err);
+});
 
 
 app.get("/", (req, res) => {

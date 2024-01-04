@@ -13,6 +13,7 @@ module.exports.renderNewForm = (req,res) => {
 
 module.exports.createListing = async(req, res) => {
     const newListing = new Listing(req.body.listing);
+    console.log(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
 }
