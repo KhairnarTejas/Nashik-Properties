@@ -17,3 +17,22 @@ module.exports.createListing = async(req, res) => {
     await newListing.save();
     res.redirect("/listings");
 }
+
+module.exports.showListing = async(req,res) => {
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listings/show.ejs",{listing});
+}
+
+module.exports.renderEditForm = async (req,res)=>{
+    let {id} = req.params;
+    let listing = await Listing.findById(id);
+    res.render("listings/edit.ejs", {listing});
+}
+
+module.exports.updateListing = async(req, res) => {
+    let {id} = req.params;
+    let listing = await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    await listing.save();
+    res.redirect(`/listings/${id}`);
+}

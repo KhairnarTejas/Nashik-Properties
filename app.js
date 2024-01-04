@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const ejsMate = require("ejs-mate");
 const MongoStore = require("connect-mongo");
+const methodOverride = require("method-override");
 
 
 dbUrl = process.env.ATLASDB_URL;
@@ -35,8 +36,9 @@ app.engine("ejs", ejsMate);
 app.use(express.urlencoded({
     extended: true
 }));
-
+app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
+
 
 
 

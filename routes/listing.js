@@ -10,6 +10,12 @@ router.route("/")
 router.route("/new")
     .get(listingController.renderNewForm);
 
+router.route("/:id")
+    .get(listingController.showListing)
+    .put(listingController.updateListing);
+
+router.route("/:id/edit")
+    .get(listingController.renderEditForm)
     
     
     
