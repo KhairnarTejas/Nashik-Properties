@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 app.get("/", (req,res) => {
     res.send("Welcome");
 })
-
+//Pull
 app.listen(8080, (req,res) => {
     console.log("Server is listening to port");
 });
