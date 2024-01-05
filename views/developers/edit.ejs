@@ -1,0 +1,54 @@
+<%layout("/layouts/boilerplate")%>
+
+
+<div class="row mt-3">
+    <div class="col-8 offset-2">
+        <form method="POST"  action="/developers/<%=developer._id%>/?_method=PUT" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" name="developer[name]" class="form-control" value="<%=developer.name%>" required>
+                
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea type="text" name="developer[description]" class="form-control"  required><%=developer.description%></textarea>
+                
+            </div>
+            <div class="mb-3">
+                <label for="logo" class="form-label">Logo link</label>
+                <input type="text" name="developer[logo]" class="form-control" value="<%=developer.logo%>" required>
+                <div class="invalid-feedback">Please enter a Logo Link.</div>
+            </div>
+            <div class="mb-3">
+                <label for="contact" class="form-label">Contact</label>
+                <input type="text" name="developer[contact]" class="form-control" value="<%=developer.contact%>" required>
+                
+            </div>
+            <div class="mb-3">
+                <label for="mail" class="form-label">Mail</label>
+                <input type="text" name="developer[mail]" class="form-control"  required value="<%=developer.mail%>">
+               
+            </div>
+            <div class="mb-3">
+                <label for="officeAddress" class="form-label">Address</label>
+                <input type="text" name="developer[officeAddress]" class="form-control" value="<%=developer.officeAddress%>" required>
+                
+            </div>
+            <div class="mb-3">
+                <label for="city" class="form-label">City</label>
+                <input type="text" name="developer[city]" class="form-control" value="<%= developer.city%>">
+            </div>
+            <div class="mb-3">
+                <label for="establishedIn" class="form-label">Since</label>
+                <input type="number" name="developer[establishedIn]" class="form-control" value="<%=developer.establishedIn%>">
+            </div>
+            <br>
+            <button class="btn mt-3">Edit</button>       
+            <br>
+
+        </form>
+    </div>
+</div>
+
+
+

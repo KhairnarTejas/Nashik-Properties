@@ -29,6 +29,7 @@ async function main() {
 
 
 const listingRouter = require("./routes/listing.js");
+const developerRouter = require("./routes/developer.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname,"views"));
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 
 app.use("/listings",listingRouter);
+app.use("/developers",developerRouter);
 
 
 const store = MongoStore.create({

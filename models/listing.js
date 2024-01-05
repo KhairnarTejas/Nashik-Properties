@@ -24,8 +24,8 @@ const listingSchema = new Schema({
         required:true,
     },
     project_by:{
-        type:String,
-        required:true,
+        type:Schema.Types.ObjectId,
+        ref:"Developer",
     },
     designed_by: String,
     legal_adviser:String,

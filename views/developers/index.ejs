@@ -1,0 +1,39 @@
+<%layout("/layouts/boilerplate")%>
+
+<div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
+  <%for(developer of allDevelopers){%>
+    <a href="/developers/<%=developer._id%>">
+  <div class="card" style="width: 18rem">
+    <img src=<%=developer.logo%> class="card-img-top" alt="developer_logo" />
+    <div class="card-body">
+      <h5 class="card-title"><%=developer.name%></h5>
+      <p class="card-text">
+        <%=developer.description%>
+      </p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Contact Us: <%=developer.contact%></li>
+      <li class="list-group-item"><b>Mail: <%=developer.mail%></b></li>
+      <li class="list-group-item"><b>Visit At: <%=developer.officeAddress%></b></li>
+      <li class="list-group-item"><b>We have our projects in  <%=developer.city%></b></li>
+    </ul>
+    <div class="card-body">
+        <a href="#" class="btn btn-primary">projects by <%=developer.name%></a>
+        <div class="buttons">
+            <a href="/developers/<%= developer._id %>/edit">
+                <button class="btn btn-dark mt-2">
+                    Edit
+                </button>
+            </a>
+            <form method="POST" action="/developers/<%=developer._id%>/?_method=DELETE">
+                <button class="btn btn-dark mt-2">
+                    Delete
+                </button>
+            </form>
+        </div>
+        
+    </div>
+  </div>
+</a>
+  <%}%>
+</div>
