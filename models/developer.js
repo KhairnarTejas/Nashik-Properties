@@ -31,7 +31,13 @@ const developerSchema = new Schema({
     },
     city:{
         type:String,
-    }
+    },
+    sites:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Listing",
+        },
+    ],
 });
 
 

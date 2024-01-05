@@ -1,26 +1,33 @@
+const Developer = require("../models/developer");
 const Listing = require("../models/listing");
 
 module.exports.index = async(req,res) =>{
-    const allListings = await Listing.find({});
+    const allListings = await Listing.find({}).populate({
+        path: "project_by"
+    });
     res.render("listings/index.ejs",{
         allListings
     });   
 }
 
-module.exports.renderNewForm = (req,res) => {
-    res.render("listings/new.ejs");
+module.exports.renderNewForm = async (req,res) => {
+    const allDevelopers = await  Developer.find({});
+    res.render("listings/new.ejs",{allDevelopers});
 }
 
 module.exports.createListing = async(req, res) => {
     const newListing = new Listing(req.body.listing);
     console.log(req.body.listing);
-    await newListing.save();
-    res.redirect("/listings");
+    let developer = Developer.findOne({name:"Roongta Developers"});
+    console.log(developer);
+    // await newListing.save();
+    // res.redirect("/listings");
+    res.send("success");
 }
 
 module.exports.showListing = async(req,res) => {
     let {id} = req.params;
-    const listing = await Listing.findById(id);
+    const listing = await Listing.findById(id).populate("project_by");
     res.render("listings/show.ejs",{listing});
 }
 
