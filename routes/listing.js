@@ -13,6 +13,8 @@ router.route("/new")
 router.route("/:id")
     .get(listingController.showListing)
     .put(listingController.updateListing)
+
+router.route("/:id/:developerId")
     .delete(listingController.destroyListing);
 
 router.route("/:id/edit")
