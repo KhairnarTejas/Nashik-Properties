@@ -19,7 +19,8 @@ module.exports.renderNewForm = async (req,res) => {
 module.exports.createListing = async(req, res) => {
     const newListing = new Listing(req.body.listing);
     // console.log(req.body.listing);
-    const developer = await Developer.findOne({name: req.body.listing.project_by});3
+    const developer = await Developer.findOne({name: req.body.listing.project_by});
+    console.log(developer);
     newListing.project_by=developer._id;
     developer.sites.push(newListing);
     await developer.save();

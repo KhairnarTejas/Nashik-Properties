@@ -16,6 +16,7 @@ router.route("/:id/edit")
     .get(developerController.renderEditForm)
 
 router.route("/:id")
+    .get(developerController.showProjectsFromDeveloper)
     .put(developerController.updateDeveloper)
     .delete(developerController.destroyDeveloper);
 
