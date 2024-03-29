@@ -1,7 +1,7 @@
 <%layout("/layouts/boilerplate")%>
 <div class="row mt-3">
     <div class="col-8 offset-2">
-        <form method="POST" action="/developers" class="needs-validation" novalidate>
+        <form method="POST" action="/developers" class="needs-validation" novalidate enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" name="developer[name]" class="form-control" placeholder="Enter Name Here" required>
@@ -13,9 +13,9 @@
                 <div class="invalid-feedback">Please enter Description.</div>
             </div>
             <div class="mb-3">
-                <label for="logo" class="form-label">Logo link</label>
-                <input type="text" name="developer[logo]" class="form-control" placeholder="Enter Logo link Here" required>
-                <div class="invalid-feedback">Please enter a Logo Link.</div>
+                <label for="developer[logo]" class="form-label">Upload Logo</label>
+                <input type="file" name="developer[logo]" class="form-control"  required>
+                <div class="invalid-feedback">Please upload logo of developer.</div>
             </div>
             <div class="mb-3">
                 <label for="contact" class="form-label">Contact</label>

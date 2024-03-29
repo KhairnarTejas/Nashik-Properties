@@ -10,6 +10,8 @@ const ejsMate = require("ejs-mate");
 const MongoStore = require("connect-mongo");
 const methodOverride = require("method-override");
 
+const Listing=require('./models/listing.js');
+
 
 dbUrl = process.env.ATLASDB_URL;
 
@@ -25,11 +27,20 @@ async function main() {
 
 
 
+// for using passport
+const passport=require("passport");// require passport for authentication
+const LocalStrategy=require("passport-local");
+const User=require("./models/users.js");
+
 
 
 
 const listingRouter = require("./routes/listing.js");
 const developerRouter = require("./routes/developer.js");
+
+const reviewRouter = require("./routes/reviews.js");
+const userRouter = require("./routes/users.js");
+
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname,"views"));
@@ -40,13 +51,60 @@ app.use(express.urlencoded({
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 
+//for session setup
+const session=require("express-session");// require session
+const flash=require("connect-flash");//require flash
+
+// sessionObject is parameter
+const sessionOption={
+    secret:"mysupersecretcode",
+    resave:false,
+    saveUninitialized:true,
+    cookie:{
+        expires:Date.now()+1000*60*60*24*7,//millisecond of 7 days
+        maxAge:1000*60*60*24*7,//
+       httpOnly:true//for security purpose:to avoid cross scripting attack
+    },
+};
+app.use(session(sessionOption));// to use sessions
+app.use(flash());
+
+// for authentication using passport
+app.use(passport.initialize())//middleware that initialize passport
+app.use(passport.session());//app.use(session(sessionOption)); require for a passport to login once in the session
+passport.use(new LocalStrategy(User.authenticate()));//all users should be authenticate through local strategy
+passport.serializeUser(User.serializeUser());//store(serialize) information of user in session
+passport.deserializeUser(User.deserializeUser());//remove(deserialize) information of user in session
 
 
 
+app.use((req,res,next)=>{
+    res.locals.success=req.flash("success");
+    res.locals.error=req.flash("error");
+    res.locals.currentUser=req.user;    
+    next();//go for next
+})
+
+app.get("/demouser", async(req, res) => {
+    let fakeuser=new User({
+        email:"student@gmail.com",
+        username:"delta-student"
+    });
+   let registerUser=await User.register(fakeuser,"helloworld");//store new user instance in database
+   res.send(registerUser);
+})
+
+app.get("/deleteallRevies",async(req,res)=>{
+  let List=  await User.deleteMany({});
+  console.log(List);
+    res.send("delete all");
+})
 
 
 app.use("/listings",listingRouter);
 app.use("/developers",developerRouter);
+app.use('/listings/:id', reviewRouter)//for reviews route
+app.use("/",userRouter);//for user route
 
 
 const store = MongoStore.create({

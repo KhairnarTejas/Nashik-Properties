@@ -1,8 +1,12 @@
 <%layout("/layouts/boilerplate")%>
+<script>
+  const mapToken="<%=process.env.MAP_TOKEN%>";
+  const listing=<%-JSON.stringify(listing)%>;
+</script>
 
 <div class="col">
     <div class="card">
-      <img src=<%=listing.image%> class="card-img-top" alt="listing_image">
+      <img src=<%=listing.image.url%> class="card-img-top" alt="listing_image">
       <div class="card-body">
         <h3 class="card-title"><%=listing.title%></h3>
         <h5 class="card-text"><%=listing.description%></h5>
@@ -27,3 +31,56 @@
       </div>
     </div>
   </div>
+
+  
+  <div>
+    <h1>Create A reviews</h1>
+    <form method="post" action="/listings/<%=listing._id %>/reviews">
+
+      <label for="review[comment]">
+        <h4>Give review,it will help us to provide best service:</h4>
+      </label> <br>
+      <input type="text" name="review[comment]" id="review[comment]">
+      <label for="review[rating]">Give rate out of 5</label>
+      <input type="range" min="1" max="5" name="review[rating]">
+      <button>Submit a review</button>
+
+    </form>
+
+  </div>
+
+  <% if (listing.reviews.length>0) { %>
+  <div>
+    <h1>Your reviews</h1>
+    <% for( review of listing.reviews ) { %>
+      <div style="border: 2px solid red; width: 200px; ">
+
+        by @<i>
+          <%=review.givenBy.username%>
+        </i>
+        <p>
+          <% for( let index=0; index < review.rating; index++ ) { %>
+            &#9733;
+            <% } %>
+        </p>
+        <p>comment:<%= review.comment %>
+        </p>
+        <form method="post" action="/listings/<%=listing._id %>/<%=review._id %>/reviews?_method=delete">
+          <button>Delete</button>
+        </form>
+      </div> <br>
+      <% } %>
+  </div>
+
+  <% } %>
+  <br><br>
+
+  <hr>
+  <div class="col-6 offset-3 mb-3">
+   <h1> where you will you</h1>
+    <div id="map"></div>
+  </div>
+
+<script src="/js/map.js"></script>
+
+<!-- --legacy-peer-deps -->

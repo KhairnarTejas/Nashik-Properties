@@ -4,31 +4,46 @@ const Schema = mongoose.Schema;
 const listingSchema = new Schema({
     title:{
         type: String,
-        required:true,
     },
-    description:{
-        type:String,
-        required: true,
+    description: {
+        type : String,
     },
     image:{
-        type:String,
-        default: "https://jooinn.com/images/building-119.jpg",
-        set: (v) => v=== ""?"https://jooinn.com/images/building-119.jpg":v,
+        url: String,
+        filename: String,
     },
     price:{
         type:Number,
-        required: true,
+    },
+    property_type:{
+        type:String,
     },
     location:{
         type:String,
-        required:true,
     },
     project_by:{
         type:Schema.Types.ObjectId,
         ref:"Developer",
     },
+    reviews: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Review'
+        }
+    ],
     designed_by: String,
     legal_adviser:String,
+    geometry: {
+        type: {
+            type: String, // Don't do `{ location: { type: String } }`
+            enum: ['Point'], // 'location.type' must be 'Point'
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
 });
 
 const Listing = mongoose.model("Listing", listingSchema);

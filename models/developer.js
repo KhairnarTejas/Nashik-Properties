@@ -7,8 +7,8 @@ const developerSchema = new Schema({
         required: true,
     },
     logo:{
-        type: String,
-        required: true,
+        url: String,
+        filename: String,
     },
     description:{
         type: String,

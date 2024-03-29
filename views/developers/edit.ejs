@@ -3,7 +3,7 @@
 
 <div class="row mt-3">
     <div class="col-8 offset-2">
-        <form method="POST"  action="/developers/<%=developer._id%>/?_method=PUT" class="needs-validation" novalidate>
+        <form method="POST"  action="/developers/<%=developer._id%>/?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" name="developer[name]" class="form-control" value="<%=developer.name%>" required>
@@ -15,8 +15,8 @@
                 
             </div>
             <div class="mb-3">
-                <label for="logo" class="form-label">Logo link</label>
-                <input type="text" name="developer[logo]" class="form-control" value="<%=developer.logo%>" required>
+                <label for="developer[logo]" class="form-label">Logo link</label>
+                <input type="file" name="developer[logo]" class="form-control"  required>
                 <div class="invalid-feedback">Please enter a Logo Link.</div>
             </div>
             <div class="mb-3">

@@ -14,6 +14,14 @@ module.exports.renderNewDeveloperForm = (req,res) =>{
 module.exports.createNewDeveloper = async(req,res) => {
     const newDeveloper = new Developer(req.body.developer);
     console.log(req.body.listing);
+    let url = req.file.path;
+    let filename = req.file.filename;
+
+    newDeveloper.logo = {
+        url,
+        filename
+    };
+
     await newDeveloper.save();
     res.redirect("/developers");
 }
@@ -27,7 +35,16 @@ module.exports.renderEditForm = async (req,res) => {
 
 module.exports.updateDeveloper = async (req,res) => {
     const {id} = req.params;
+    let url = req.file.path;
+    let filename = req.file.filename;
+
+        
     const updatedDeveloper = await Developer.findByIdAndUpdate(id,{...req.body.developer});
+    updatedDeveloper.logo = {
+        url,
+        filename
+    };
+        
     console.log(updatedDeveloper);
     await updatedDeveloper.save();
     res.redirect("/developers");
