@@ -1,3 +1,6 @@
+//New comment
+
+
 if (process.env.NODE_ENV != "production") {
     require('dotenv').config();
 }
@@ -25,6 +28,7 @@ async function main() {
     await  mongoose.connect(dbUrl);
 }
 
+//Acassa
 
 
 // for using passport
@@ -127,3 +131,6 @@ app.get("/", (req, res) => {
 app.listen(8080, (req, res) => {
     console.log("Server is listening to port");
 });
+
+
+//ok
