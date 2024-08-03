@@ -18,8 +18,9 @@
       <li class="list-group-item"><b>We have our projects in  <%=developer.city%></b></li>
     </ul>
     <div class="card-body">
-        <a href="/developers/<%=developer._id%>" class="btn btn-primary">projects by <%=developer.name%></a>
-        <div class="buttons">
+        <a href="/developers/moreproject/<%=developer._id%>" class="btn btn-primary">projects by <%=developer.name%></a>
+        <% if (currentUser && developer.user && currentUser._id.equals(developer.user._id)) { %>
+          <div class="buttons">
             <a href="/developers/<%= developer._id %>/edit">
                 <button class="btn btn-dark mt-2">
                     Edit
@@ -31,7 +32,7 @@
               </button>
           </form>
         </div>
-        
+      <% } %>
     </div>
   </div>
 

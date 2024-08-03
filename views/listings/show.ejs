@@ -17,17 +17,21 @@
         <p class="card-text">Designed by: <%=listing.designed_by%></p>
         <p class="card-text">Legal Adviser: <%=listing.legal_adviser%></p>
 
-        <div>
-          <a
-          href="/listings/<%= listing._id%>/edit"
-          class="btn btn-dark col-1 offset-3 edit-btn"
-          >Edit</a>
-
-          <form method="POST" action="/listings/<%=listing._id%>/<%=listing.project_by._id%>/?_method=DELETE">
-            <button class="btn btn-dark col-1 offset-5 edit-btn">Delete</button>
-          </form>
-
-        </div>
+        <% if ( currentUser && listing.owner && currentUser._id.equals(listing.owner._id)) { %>
+          <div>
+            <a
+            href="/listings/<%= listing._id%>/edit"
+            class="btn btn-dark col-1 offset-3 edit-btn"
+            >Edit</a>
+  
+            <form method="POST" action="/listings/<%=listing._id%>/<%=listing.project_by._id%>/?_method=DELETE">
+              <button class="btn btn-dark col-1 offset-5 edit-btn">Delete</button>
+            </form>
+  
+          </div>
+  
+          <% } %>
+        
       </div>
     </div>
   </div>
@@ -65,9 +69,13 @@
         </p>
         <p>comment:<%= review.comment %>
         </p>
-        <form method="post" action="/listings/<%=listing._id %>/<%=review._id %>/reviews?_method=delete">
-          <button>Delete</button>
-        </form>
+        <% if ( currentUser  && currentUser._id.equals(review.givenBy._id)) { %>
+          <form method="post" action="/listings/<%=listing._id %>/<%=review._id %>/reviews?_method=delete">
+            <button>Delete</button>
+          </form>
+  
+          <% } %>
+        
       </div> <br>
       <% } %>
   </div>

@@ -27,8 +27,8 @@ module.exports.renderNewForm = async (req, res) => {
 }
 
 
-
 module.exports.createListing = async (req, res) => {
+    console.log("Hi List Add");
     try {
         let response = await GeocodingClient.forwardGeocode({
             query: req.body.listing.location,
@@ -44,6 +44,7 @@ module.exports.createListing = async (req, res) => {
             name: req.body.listing.project_by
         });
         console.log(developer);
+        newListing.owner=req.user._id;
         newListing.project_by = developer._id;
         newListing.image = {
             url,
