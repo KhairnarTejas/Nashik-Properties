@@ -1,12 +1,16 @@
 const Listing = require("../models/listing.js")//require model listing
 const mongoose=require('mongoose')
 const Review = require("../models/reviews.js");
+const { v4: uuidv4 } = require('uuid');
 
 const createNewReview=async (req, res) => {
     console.log('Hi create review');
     let { id } = req.params;
     let listing = await Listing.findById(id);
     let newreview = new Review(req.body.review);
+    let uniqueUsername = `review-${uuidv4()}`;
+    newreview.username = uniqueUsername;
+   
     listing.reviews.push(newreview);
     newreview.givenBy = req.user._id;
     await newreview.save();
@@ -15,6 +19,9 @@ const createNewReview=async (req, res) => {
     req.flash("success","new review created!");
     res.redirect(`/listings/${id}`);
 }
+
+    
+
 const DeleteReview= async (req, res) => {
     let { id, reviewId } = req.params;
     let rev= await Review.findById(reviewId);

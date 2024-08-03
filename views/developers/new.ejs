@@ -1,7 +1,15 @@
-<%layout("/layouts/boilerplate")%>
+<% layout("/layouts/boilerplate") %>
+
+
 <div class="row mt-3">
     <div class="col-8 offset-2">
         <form method="POST" action="/developers" class="needs-validation" novalidate enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" name="developer[username]" class="form-control" placeholder="Enter Username Here" required>
+                <div class="invalid-feedback">Please enter a Username.</div>
+            </div>
+            
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" name="developer[name]" class="form-control" placeholder="Enter Name Here" required>
@@ -46,4 +54,4 @@
 
         </form>
     </div>
-</div>
+</div> 

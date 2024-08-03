@@ -44,6 +44,11 @@ const listingSchema = new Schema({
             required: true
         }
     },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        // required: true // Ensure that each developer is associated with a user
+    }
 });
 
 const Listing = mongoose.model("Listing", listingSchema);

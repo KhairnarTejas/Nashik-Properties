@@ -1,0 +1,76 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  .card {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .card-title {
+    margin-top: 0;
+  }
+
+  .card-text {
+    margin-bottom: 20px;
+  }
+
+  .list-group-item {
+    border-top: none;
+  }
+
+  .btn-primary {
+    width: 100%;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+
+  .col-lg-4 {
+    flex: 0 0 calc(33.333% - 30px);
+    max-width: calc(33.333% - 30px);
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+</style>
+
+<div class="container mt-3">
+  <div class="row">
+    <% for (let i = 0; i < allListings.length; i++) { %>
+    <a href="/listings/<%=allListings[i]._id%>">
+        <div class="col-lg-4">
+            <div class="card">
+              <img src="<%= allListings[i].image.url %>" class="card-img-top" alt="listing_image">
+              <div class="card-body">
+                <h5 class="card-title"><%= allListings[i].title %></h5>
+                <p class="card-text"><%= allListings[i].description %></p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><%= allListings[i].location %></li>
+                <li class="list-group-item"><b><%= allListings[i].project_by.name %></b></li>
+              </ul>
+              
+            </div>
+          </div>
+
+    </a>
+    <% } %>
+  </div>
+</div>

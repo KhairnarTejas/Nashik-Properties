@@ -16,7 +16,11 @@ const methodOverride = require("method-override");
 const Listing=require('./models/listing.js');
 
 
-dbUrl = process.env.ATLASDB_URL;
+// dbUrl = process.env.ATLASDB_URL;
+// dbUrl='mongodb+srv://siddharth-sahane:kxQh9Eg96l7gsTL8@cluster0.idmnbmp.mongodb.net/Nashik-Propertiess?retryWrites=true&w=majority&appName=Cluster0';
+// dbUrl='mongodb+srv://siddharth-sahane:kxQh9Eg96l7gsTL8@cluster0.idmnbmp.mongodb.net/Nashik-Propertiess?retryWrites=true&w=majority&appName=Cluster0';
+// dbUrl='mongodb+srv://siddharth-sahane:kxQh9Eg96l7gsTL8@cluster0.idmnbmp.mongodb.net/Nashik-Property?retryWrites=true&w=majority&appName=Cluster0';
+dbUrl='mongodb://localhost:27017/NashikPropertyyy';
 
 main()
     .then(() => {
@@ -88,6 +92,29 @@ app.use((req,res,next)=>{
     res.locals.currentUser=req.user;    
     next();//go for next
 })
+
+
+app.get("/", async(req, res) => {
+   res.render('Home.ejs');
+})
+
+app.get('/search', async (req, res) => {
+    try {
+      const query = req.query.query || '';
+  
+      // Perform a search on your listings based on the name field
+      const results = await Listing.find({
+        title: { $regex: query, $options: 'i' } // Case-insensitive search
+      }).populate('project_by');
+  
+      // Render the results in your search results page
+      res.render('listings/index.ejs', { allListings: results });
+    } catch (err) {
+      console.error("Error during search:", err);
+      res.status(500).send("An error occurred while searching.");
+    }
+  });
+
 
 app.get("/demouser", async(req, res) => {
     let fakeuser=new User({

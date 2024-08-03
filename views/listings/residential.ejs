@@ -3,7 +3,7 @@
 
 <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
   <%for(listing of allListings){%>
-    <a href="/listings/<%=listing._id%>">
+    <a href="/listings/<%=listing._id%>"> 
   <div class="card" style="width: 18rem">
     <img src=<%=listing.image.url%> class="card-img-top" alt="listing_image" />
     <div class="card-body">
@@ -17,7 +17,7 @@
       <li class="list-group-item"><b><%=listing.project_by.name%></b></li>
     </ul>
     <div class="card-body">
-        <a href="/developers/<%=listing.project_by._id%>" class="btn btn-primary">More projects by <%=listing.project_by.name%></a>
+        <a href="/developers/moreproject/<%= listing.project_by._id %>" class="btn btn-primary">More projects by <%=listing.project_by.name%></a>
     </div>
   </div>
 </a>

@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const reviewSchema = mongoose.Schema(
     {
+        username: {
+            type: String,
+            required: true, // Ensure username is required
+            unique: true   // Ensure username is unique
+        },
         comment:{
             type: String,
         },

@@ -11,20 +11,58 @@ module.exports.renderNewDeveloperForm = (req,res) =>{
     res.render("developers/new.ejs");
 }
 
-module.exports.createNewDeveloper = async(req,res) => {
-    const newDeveloper = new Developer(req.body.developer);
-    console.log(req.body.listing);
-    let url = req.file.path;
-    let filename = req.file.filename;
 
-    newDeveloper.logo = {
-        url,
-        filename
-    };
+module.exports.createNewDeveloper = async (req, res) => {
+    try {
+        // Ensure the developer data exists in the request body
+        if (!req.body.developer) {
+            return res.status(400).send("Developer data is required.");
+        }
 
-    await newDeveloper.save();
-    res.redirect("/developers");
-}
+        const { username, name, description, contact, mail, officeAddress, establishedIn, city } = req.body.developer;
+
+        // Validate that the username is provided and not null
+        if (!username) {
+            return res.status(400).send("Username is required and cannot be null.");
+        }
+        const userId = req.user._id; // Assumes `req.user` contains the logged-in user info
+
+        // Create new developer object
+        const newDeveloper = new Developer({
+            username,
+            name,
+            description,
+            contact,
+            mail,
+            officeAddress,
+            establishedIn,
+            city,
+            user: userId // Associate the developer with the user
+        });
+
+        // Handle file upload if exists
+        if (req.file) {
+            let url = req.file.path;
+            let filename = req.file.filename;
+
+            newDeveloper.logo = {
+                url,
+                filename
+            };
+        }
+
+        await newDeveloper.save();
+
+        res.redirect("/developers");
+    } catch (error) {
+        console.error("Error creating new developer:", error.message);
+        if (error.code === 11000) {
+            res.status(400).send("Duplicate key error: Username must be unique.");
+        } else {
+            res.status(500).send("An error occurred while creating the developer.");
+        }
+    }
+};
 
 module.exports.renderEditForm = async (req,res) => {
     const {id} = req.params;
@@ -32,23 +70,59 @@ module.exports.renderEditForm = async (req,res) => {
     res.render("developers/edit.ejs",{developer});
 } 
 
-
-module.exports.updateDeveloper = async (req,res) => {
-    const {id} = req.params;
-    let url = req.file.path;
-    let filename = req.file.filename;
+module.exports.updateDeveloper = async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      // Find the developer by ID
+      const developer = await Developer.findById(id);
+  
+      // Check if developer exists
+      if (!developer) {
+        return res.status(404).send('Developer not found.');
+      }
+  
+      // Update other fields
+      const updatedFields = { ...req.body.developer };
+  
+      // Check if a new file is uploaded
+      if (req.file) {
+        // If a new file is uploaded, update the logo field
+        updatedFields.logo = {
+          url: req.file.path,
+          filename: req.file.filename
+        };
+      } else {
+        // Keep the old logo if no new file is uploaded
+        updatedFields.logo = developer.logo;
+      }
+  
+      // Update the developer
+      await Developer.findByIdAndUpdate(id, updatedFields, { new: true });
+  
+      // Redirect or respond as needed
+      res.redirect('/developers');
+    } catch (err) {
+      console.error('Error updating developer:', err);
+      res.status(500).send('An error occurred while updating the developer.');
+    }
+  };
+// module.exports.updateDeveloper = async (req,res) => {
+//     const {id} = req.params;
+//     let url = req.file.path;
+//     let filename = req.file.filename;
 
         
-    const updatedDeveloper = await Developer.findByIdAndUpdate(id,{...req.body.developer});
-    updatedDeveloper.logo = {
-        url,
-        filename
-    };
+//     const updatedDeveloper = await Developer.findByIdAndUpdate(id,{...req.body.developer});
+//     updatedDeveloper.logo = {
+//         url,
+//         filename
+//     };
         
-    console.log(updatedDeveloper);
-    await updatedDeveloper.save();
-    res.redirect("/developers");
-}
+//     console.log(updatedDeveloper);
+//     await updatedDeveloper.save();
+//     res.redirect("/developers");
+// }
 
 
 module.exports.destroyDeveloper = async (req, res) => {
