@@ -1,63 +1,76 @@
-
-
-<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"><i class="fa-solid fa-building-user"></i></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nashik Properties</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .navbar-nav.ml-auto .nav-link {
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+        <img width="100px" height="60px" src="https://graphicsfamily.com/wp-content/uploads/edd/2021/01/Free-Real-Estate-Logo-Template-1180x664.jpg" alt="NashikProperties">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
-
-          <li class="nav-item">
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                View  By
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/listings">Sites</a></li>
-                <li><a class="dropdown-item" href="/developers">Developers</a></li>
-              </ul>
-            </div>
-        </li>
-          <li class="nav-item">
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                View by Type of projects
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/listings/residential">Residential</a></li>
-                <li><a class="dropdown-item" href="/listings/commercial">Commercial</a></li>
-                <li><a class="dropdown-item" href="/listings/plot">Plot</a></li>
-            </ul>
-            </div>
-        </li>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="viewByDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    View By
+                </a>
+                <div class="dropdown-menu" aria-labelledby="viewByDropdown">
+                    <a class="dropdown-item" href="/developers">Developers</a>
+                    <a class="dropdown-item" href="/listings">Projects</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="viewProjectsByDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    View Projects By
+                </a>
+                <div class="dropdown-menu" aria-labelledby="viewProjectsByDropdown">
+                    <a class="dropdown-item" href="/listings/residential">Residential</a>
+                    <a class="dropdown-item" href="/listings/commercial">Commercial</a>
+                    <a class="dropdown-item" href="/listings/plot">Plot</a>
+                </div>
+            </li>
         </ul>
-        <form class="d-flex" role="search" method="GET" action="/search">
-          <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-        <div class="navbar-nav ms-auto">
-          <% if (currentUser) { %>
-            <a class="nav-link" href="/listings/new">Add New Project</a>
-            <a class="nav-link" href="/developers/new">Add developers</a>
-            <a class="nav-link" href="/logout">Log out</a>
-        <% } %>
-        <% if (!currentUser) { %>
-            <a class="nav-link" href="/signup">Sign up</a>
-            <a class="nav-link" href="/login">Log in</a>
-        <% } %>
-         
-      </div>
-      </div>
+        <ul class="navbar-nav ml-auto">
+            <% if (currentUser) { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listings/new">Add New Project</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/developers/new">Add New Developer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Log out</a>
+                </li>
+            <% } %>
+            <% if (!currentUser) { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup">Sign up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Log in</a>
+                </li>
+            <% } %>
+        </ul>
     </div>
-  </nav>
+</nav>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -20,8 +20,8 @@ const Listing=require('./models/listing.js');
 // dbUrl='mongodb+srv://siddharth-sahane:kxQh9Eg96l7gsTL8@cluster0.idmnbmp.mongodb.net/Nashik-Propertiess?retryWrites=true&w=majority&appName=Cluster0';
 // dbUrl='mongodb+srv://siddharth-sahane:kxQh9Eg96l7gsTL8@cluster0.idmnbmp.mongodb.net/Nashik-Propertiess?retryWrites=true&w=majority&appName=Cluster0';
 // dbUrl='mongodb+srv://siddharth-sahane:kxQh9Eg96l7gsTL8@cluster0.idmnbmp.mongodb.net/Nashik-Property?retryWrites=true&w=majority&appName=Cluster0';
-dbUrl='mongodb://localhost:27017/NashikPropertytejas';
 
+dbUrl='mongodb://localhost:27017/NashikPropertytejas';
 main()
     .then(() => {
         console.log("Connected to db.");

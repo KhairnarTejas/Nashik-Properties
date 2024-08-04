@@ -1,40 +1,74 @@
 <%layout("/layouts/boilerplate")%>
 
-<div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
-  <%for(developer of allDevelopers){%>
-    
-  <div class="card" style="width: 18rem">
-    <img src=<%=developer.logo.url%> class="card-img-top" alt="developer_logo" />
-    <div class="card-body">
-      <h5 class="card-title"><%=developer.name%></h5>
-      <p class="card-text">
-        <%=developer.description%>
-      </p>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Contact Us: <%=developer.contact%></li>
-      <li class="list-group-item"><b>Mail: <%=developer.mail%></b></li>
-      <li class="list-group-item"><b>Visit At: <%=developer.officeAddress%></b></li>
-      <li class="list-group-item"><b>We have our projects in  <%=developer.city%></b></li>
-    </ul>
-    <div class="card-body">
-        <a href="/developers/moreproject/<%=developer._id%>" class="btn btn-primary">projects by <%=developer.name%></a>
-        <% if (currentUser && developer.user && currentUser._id.equals(developer.user._id)) { %>
-          <div class="buttons">
-            <a href="/developers/<%= developer._id %>/edit">
-                <button class="btn btn-dark mt-2">
-                    Edit
-                </button>
-            </a>
-            <form method="POST" action="/developers/<%=developer._id%>/?_method=DELETE">
-              <button class="btn btn-dark mt-2">
-                  Delete
-              </button>
-          </form>
-        </div>
-      <% } %>
-    </div>
-  </div>
+<style>
+  .card {
+    margin-bottom: 20px;
+  }
+  .card-img-top {
+    height: 180px; /* Adjust height as needed */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+  }
+  .card-body {
+    min-height: 120px; /* Ensures that card body has enough space for content */
+  }
+  .card-button {
+    background-color: #2d3e50; /* Primary color for buttons */
+    color: white; /* Text color for buttons */
+    border: none; /* Removes border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding inside buttons */
+  }
+  .card-button:hover {
+    background-color: #1a2c40; /* Darker shade for hover effect */
+  }
+  .card-button-secondary {
+    background-color: #6c757d; /* Secondary color for buttons */
+    color: white; /* Text color for secondary buttons */
+  }
+  .card-button-secondary:hover {
+    background-color: #5a6268; /* Darker shade for hover effect */
+  }
+  .buttons {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+  }
+</style>
 
-  <%}%>
+<div class="container mt-3">
+  <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 g-4">
+    <% for (developer of allDevelopers) { %>
+      <div class="col">
+        <div class="card">
+          <img src="<%= developer.logo.url %>" class="card-img-top" alt="developer_logo" />
+          <div class="card-body">
+            <h5 class="card-title"><%= developer.name %></h5>
+            <p class="card-text">
+              <%= developer.description %>
+            </p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Contact Us: <%= developer.contact %></li>
+            <li class="list-group-item"><b>Mail: <%= developer.mail %></b></li>
+            <li class="list-group-item"><b>Visit At: <%= developer.officeAddress %></b></li>
+            <li class="list-group-item"><b>We have our projects in <%= developer.city %></b></li>
+          </ul>
+          <div class="card-body">
+            <a href="/developers/moreproject/<%= developer._id %>" class="btn card-button">Projects by <%= developer.name %></a>
+            <% if (currentUser && developer.user && currentUser._id.equals(developer.user._id)) { %>
+              <div class="buttons mt-3">
+                <a href="/developers/<%= developer._id %>/edit" class="btn card-button card-button-secondary">
+                  Edit
+                </a>
+                <form method="POST" action="/developers/<%= developer._id %>/?_method=DELETE" class="d-inline">
+                  <button type="submit" class="btn card-button card-button-secondary">
+                    Delete
+                  </button>
+                </form>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
 </div>
