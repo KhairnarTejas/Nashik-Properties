@@ -20,7 +20,7 @@ router.post("/signup", async (req, res) => {
                         if (err) {
                                 return next(err);
                         }
-                        req.flash("success", "Welcome to wanderlust!");
+                        req.flash("success", "Welcome to Nashik Properties!");
                         res.redirect("/listings");
                 }
                 );
@@ -48,7 +48,7 @@ router.post("/login", passport.authenticate("local", {
         failureFlash: true,
 }),
         (req, res) => {
-                req.flash("success", "Welcome to wanderlust! You logged in successfully!");
+                req.flash("success", "Welcome to Nashik Properties! You logged in successfully!");
                 let redirectUrl = res.locals.redirectUrl || "/listings";
                 res.redirect(redirectUrl);
                 //res.redirect("/listings");

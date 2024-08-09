@@ -8,15 +8,14 @@
     overflow: hidden;
   }
 
-  .card img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-bottom: 1px solid #ccc;
+  .card-img-top {
+    height: 180px; /* Adjust height as needed to match developer cards */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
   }
 
   .card-body {
     padding: 20px;
+    min-height: 120px; /* Ensures that card body has enough space for content */
   }
 
   .card-title {
@@ -29,18 +28,25 @@
 
   .list-group-item {
     border-top: none;
+    padding: 10px 15px; /* Padding inside list items */
   }
 
   .btn-primary {
     width: 100%;
+    background-color: #2d3e50; /* Primary color for buttons */
+    color: white;
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+  }
+
+  .btn-primary:hover {
+    background-color: #1a2c40; /* Darker shade for hover effect */
   }
 
   .row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-right: -15px;
-    margin-left: -15px;
   }
 
   .col-lg-4 {
@@ -49,15 +55,20 @@
     padding-right: 15px;
     padding-left: 15px;
   }
+
+  .g-4 {
+    gap: 1rem;
+  }
 </style>
 
 <div class="container mt-3">
-  <div class="row">
+  <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 g-4">
     <% for (let i = 0; i < allListings.length; i++) { %>
-      <a href="/listings/<%=allListings[i]._id%>">
-      <div class="col-lg-4">
+      <div class="col">
         <div class="card">
-          <img src="<%= allListings[i].image.url %>" class="card-img-top" alt="listing_image">
+          <a href="/listings/<%= allListings[i]._id %>">
+            <img src="<%= allListings[i].image.url %>" class="card-img-top" alt="listing_image">
+          </a>
           <div class="card-body">
             <h5 class="card-title"><%= allListings[i].title %></h5>
             <p class="card-text"><%= allListings[i].description %></p>
@@ -67,11 +78,12 @@
             <li class="list-group-item"><b><%= allListings[i].project_by.name %></b></li>
           </ul>
           <div class="card-body">
-            <a href="/developers/moreproject/<%= allListings[i].project_by._id %>" class="btn btn-primary">More projects by <%= allListings[i].project_by.name %></a>
+            <a href="/developers/moreproject/<%= allListings[i].project_by._id %>" class="btn btn-primary">
+              More projects by <%= allListings[i].project_by.name %>
+            </a>
           </div>
         </div>
       </div>
-      </a>
     <% } %>
   </div>
 </div>
