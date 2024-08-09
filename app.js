@@ -21,7 +21,7 @@ const Listing=require('./models/listing.js');
 // dbUrl='mongodb+srv://siddharth-sahane:kxQh9Eg96l7gsTL8@cluster0.idmnbmp.mongodb.net/Nashik-Propertiess?retryWrites=true&w=majority&appName=Cluster0';
 // dbUrl='mongodb+srv://siddharth-sahane:kxQh9Eg96l7gsTL8@cluster0.idmnbmp.mongodb.net/Nashik-Property?retryWrites=true&w=majority&appName=Cluster0';
 
-dbUrl='mongodb://localhost:27017/NashikPropertytejas';
+dbUrl='mongodb+srv://tejaskhairnar132:tejaskhairnar@cluster0.dwzer.mongodb.net/nashikproperties?retryWrites=true&w=majority&appName=Cluster0';
 main()
     .then(() => {
         console.log("Connected to db.");
@@ -29,7 +29,14 @@ main()
     .catch(err => console.log(err));
 
 async function main() {
-    await  mongoose.connect(dbUrl);
+    await  mongoose.connect(dbUrl
+    //     ,{
+    //     useNewUrlParser : true,
+    //     useUnifiedTopology: true,
+    //     tlsAllowInvalidCertificates: true,
+    // tlsAllowInvalidHostnames: true
+    //     }
+    );
 }
 
 //Acassa
