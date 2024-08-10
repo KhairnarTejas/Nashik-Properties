@@ -170,7 +170,7 @@
                 </li>
                 <li class="nav-item">
                     <div class="navbar-nav ms-auto">
-                        <% if (currentUser) { %>
+                        <% if (currentUser && currentUser.email=="tejas@gmail.com") { %>
                         <a class="nav-link " href="/listings/new">Add New Project</a>
                         <a class="nav-link " href="/developers/new">Add New Developer</a>
                         <% } %>
