@@ -17,7 +17,7 @@
             <div class="mb-3">
                 <label for="image" class="form-label">Image link</label>
                 <input type="file" name="listing[image]" class="form-control"  required>
-                <div class="invalid-feedback">Please upload photo.</div>
+                <div class="invalid-feedback">Please upload photo.</div>    
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
@@ -32,11 +32,11 @@
             
             <div class="mb-3">
                 <label for="designed_by" class="form-label">Designed by</label>
-                <input type="text" name="listing[designed_by]" class="form-control" >
+                <input type="text" name="listing[designed_by]" value="<%=listing.designed_by%>" class="form-control" >
             </div>
             <div class="mb-3">
                 <label for="legal_adviser" class="form-label">Legal Adviser</label>
-                <input type="text" name="listing[legal_adviser]" class="form-control" >
+                <input type="text" name="listing[legal_adviser]" value="<%=listing.legal_adviser%>" class="form-control" >
             </div>
             <br>
             <button class="btn mt-3">Edit</button>       

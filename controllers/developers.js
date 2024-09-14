@@ -1,5 +1,6 @@
 const Developer = require("../models/developer");
 const Listing = require("../models/listing");
+const { v4: uuidv4 } = require('uuid');
 
 
 module.exports.index = async (req,res)=> {
@@ -19,12 +20,15 @@ module.exports.createNewDeveloper = async (req, res) => {
             return res.status(400).send("Developer data is required.");
         }
 
-        const { username, name, description, contact, mail, officeAddress, establishedIn, city } = req.body.developer;
+        const {name, description, contact, mail, officeAddress, establishedIn, city } = req.body.developer;
 
+        let uniqueUsername = `developer-${uuidv4()}`;
+        username = uniqueUsername;
+   
         // Validate that the username is provided and not null
-        if (!username) {
-            return res.status(400).send("Username is required and cannot be null.");
-        }
+        // if (!username) {
+        //     return res.status(400).send("Username is required and cannot be null.");
+        // }
         const userId = req.user._id; // Assumes `req.user` contains the logged-in user info
 
         // Create new developer object

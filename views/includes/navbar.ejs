@@ -9,6 +9,12 @@
         .navbar-nav.ml-auto .nav-link {
             margin-left: 15px;
         }
+        .search-form {
+            margin-left: auto;
+        }
+        .search-input {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -21,9 +27,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home</a>
-            </li>
+            
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="viewByDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     View By
@@ -44,21 +48,27 @@
                 </div>
             </li>
         </ul>
+
+        <!-- Search form -->
+        <form class="form-inline search-form" action="/search" method="GET">
+            <input class="form-control mr-sm-2 search-input" type="search" name="query" placeholder="Search Projects" aria-label="Search" required>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
         <ul class="navbar-nav ml-auto">
-            <% if (currentUser && currentUser.email=="tejas@gmail.com") { %>
+            <% if (currentUser && currentUser.email == "tejas@gmail.com") { %>
                 <li class="nav-item">
                     <a class="nav-link" href="/listings/new">Add New Project</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/developers/new">Add New Developer</a>
                 </li>
-                
             <% } %>
-            <%if(currentUser){%>
+            <% if (currentUser) { %>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Log out</a>
                 </li>
-            <%}%>
+            <% } %>
             <% if (!currentUser) { %>
                 <li class="nav-item">
                     <a class="nav-link" href="/signup">Sign up</a>

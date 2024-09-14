@@ -1,31 +1,113 @@
-<%layout("/layouts/boilerplate")%>
+<% layout("/layouts/boilerplate") %>
 
-  <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
-    <%for(listing of allListings){%>
-      <a href="/listings/<%=listing._id%>">
-        <div class="card" style="width: 18rem">
-          <img src=<%=listing.image.url%> class="card-img-top" alt="listing_image" />
-          <div class="card-body">
-            <h5 class="card-title">
-              <%=listing.title%>
-            </h5>
-            <p class="card-text">
-              <%=listing.description%>
-            </p>
+<style>
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+  }
+
+  .card-text {
+    margin-bottom: 15px;
+  }
+
+  .list-group-item {
+    border: none;
+    padding: 10px 15px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: #fff;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -15px;
+  }
+
+  .col-lg-4, .col-md-4, .col-sm-12 {
+    padding: 15px;
+  }
+
+  @media (min-width: 992px) {
+    .col-lg-4 {
+      flex: 0 0 calc(33.333% - 30px);
+      max-width: calc(33.333% - 30px);
+    }
+  }
+
+  @media (max-width: 991px) {
+    .col-md-4 {
+      flex: 0 0 calc(50% - 30px);
+      max-width: calc(50% - 30px);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .col-sm-12 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+</style>
+
+<div class="container mt-3">
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+    <% for (let listing of allListings) { %>
+      <div class="col">
+        <a href="/listings/<%= listing._id %>">
+          <div class="card">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
+            <div class="card-body">
+              <h5 class="card-title"><%= listing.title %></h5>
+              <p class="card-text"><%= listing.description %></p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><%= listing.location %></li>
+              <li class="list-group-item"><b><%= listing.project_by.name %></b></li>
+            </ul>
+            <div class="card-body text-center">
+              <a href="/developers/<%= listing.project_by._id %>" class="btn btn-primary">
+                More projects by <%= listing.project_by.name %>
+              </a>
+            </div>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <%=listing.location%>
-            </li>
-            <li class="list-group-item"><b>
-                <%=listing.project_by.name%>
-              </b></li>
-          </ul>
-          <div class="card-body">
-            <a href="/developers/<%=listing.project_by._id%>" class="btn btn-primary">More projects by
-              <%=listing.project_by.name%></a>
-          </div>
-        </div>
-      </a>
-      <% } %>
+        </a>
+      </div>
+    <% } %>
   </div>
+</div>

@@ -54,6 +54,7 @@ module.exports.createListing = async (req, res) => {
         await developer.save();
         newListing.geometry = response.body.features[0].geometry;
         await newListing.save();
+        console.log(newListing);
         console.log("Listing created successfully");
         res.redirect("/listings");
     } catch (error) {
@@ -96,25 +97,64 @@ module.exports.renderEditForm = async (req, res) => {
 }
 
 module.exports.updateListing = async (req, res) => {
-    let {
-        id
-    } = req.params;
-    let listing = await Listing.findByIdAndUpdate(id, {
-        ...req.body.listing
-    });
-    if (req.file) {
-        let url = req.file.url;
-        let filename = req.file.filename;
-
-        listing.image = {
-            url,
-            filename
+    try {
+      const { id } = req.params;
+  
+      // Find the listing by ID
+      const listing = await Listing.findById(id);
+  
+      // Check if the listing exists
+      if (!listing) {
+        return res.status(404).send('Listing not found.');
+      }
+  
+      // Update other fields
+      const updatedFields = { ...req.body.listing };
+  
+      // Check if a new file is uploaded
+      if (req.file) {
+        // If a new file is uploaded, update the image field
+        updatedFields.image = {
+          url: req.file.path,  // Use the full path of the uploaded file
+          filename: req.file.filename
         };
+      } else {
+        // Keep the old image if no new file is uploaded
+        updatedFields.image = listing.image;
+      }
+  
+      // Update the listing
+      await Listing.findByIdAndUpdate(id, updatedFields, { new: true });
+  
+      // Redirect or respond as needed
+      res.redirect(`/listings/${id}`);
+    } catch (err) {
+      console.error('Error updating listing:', err);
+      res.status(500).send('An error occurred while updating the listing.');
     }
+  };
+  
 
-    await listing.save();
-    res.redirect(`/listings/${id}`);
-}
+// module.exports.updateListing = async (req, res) => {
+//     let {id} = req.params;
+//     let listing = await Listing.findByIdAndUpdate(id, {
+//         ...req.body.listing
+//     });
+
+//     if (req.file) {
+//         let url = req.file.url;
+//         let filename = req.file.filename;
+
+//         listing.image = {
+//             url,
+//             filename
+//         };
+//         console.log("HELLO......."+url+";;;;; "+filename);
+//     }
+
+//     await listing.save();
+//     res.redirect(`/listings/${id}`);
+// }
 
 
 module.exports.destroyListing = async (req, res) => {

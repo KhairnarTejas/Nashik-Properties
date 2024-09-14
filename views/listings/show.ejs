@@ -1,94 +1,153 @@
 <%layout("/layouts/boilerplate")%>
 <script>
-  const mapToken="<%=process.env.MAP_TOKEN%>";
-  const listing=<%-JSON.stringify(listing)%>;
+  const mapToken = "<%=process.env.MAP_TOKEN%>";
+  const listing = <%-JSON.stringify(listing)%>;
 </script>
 
-<div class="col">
-    <div class="card">
-      <img src=<%=listing.image.url%> class="card-img-top" alt="listing_image">
-      <div class="card-body">
-        <h3 class="card-title"><%=listing.title%></h3>
-        <h5 class="card-text"><%=listing.description%></h5>
-        <h6 class="card-text">Project by: <%=listing.project_by.name%></h6>
-        <%console.log(listing.project_by);%>
-        <p class="card-text">Price: &#8377; <%= listing.price?listing.price.toLocaleString("en-IN"):0 %></p>
-        
-        <p class="card-text">Designed by: <%=listing.designed_by%></p>
-        <p class="card-text">Legal Adviser: <%=listing.legal_adviser%></p>
+<style>
+  .card {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+  .card-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .card-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  .card-text {
+    margin-bottom: 10px;
+  }
+  .btn {
+    border-radius: 5px;
+    padding: 10px 15px;
+  }
+  .btn-dark {
+    background-color: #343a40;
+    color: #fff;
+  }
+  .btn-dark:hover {
+    background-color: #23272b;
+  }
+  .edit-btn {
+    margin: 5px;
+  }
+  .review-container {
+    margin: 20px 0;
+  }
+  .review-card {
+    border: 2px solid #dc3545;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 400px;
+  }
+  .review-card p {
+    margin: 5px 0;
+  }
+  .map-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  #map {
+    height: 400px;
+    width: 100%;
+    border: 2px solid #343a40;
+    border-radius: 8px;
+  }
+  form {
+    margin-top: 20px;
+  }
+  form input, form button {
+    margin: 10px 0;
+  }
+</style>
 
-        <% if ( currentUser && listing.owner && currentUser._id.equals(listing.owner._id)) { %>
-          <div>
-            <a
-            href="/listings/<%= listing._id%>/edit"
-            class="btn btn-dark col-1 offset-3 edit-btn"
-            >Edit</a>
-  
-            <form method="POST" action="/listings/<%=listing._id%>/<%=listing.project_by._id%>/?_method=DELETE">
-              <button class="btn btn-dark col-1 offset-5 edit-btn">Delete</button>
-            </form>
-  
-          </div>
-  
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <img src="<%=listing.image.url%>" class="card-img-top" alt="listing_image">
+        <div class="card-body">
+          <h3 class="card-title"><%=listing.title%></h3>
+          <h5 class="card-text"><%=listing.description%></h5>
+          <h6 class="card-text">Project by: <%=listing.project_by.name%></h6>
+          <p class="card-text">Price: &#8377; <%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %></p>
+          <p class="card-text">Designed by: <%=listing.designed_by%></p>
+          <p class="card-text">Legal Adviser: <%=listing.legal_adviser%></p>
+          <% if (currentUser && currentUser.email == "tejas@gmail.com") { %>
+            <div>
+              <a href="/listings/<%= listing._id%>/edit" class="btn btn-dark edit-btn">Edit</a>
+              <form method="POST" action="/listings/<%=listing._id%>/<%=listing.project_by._id%>/?_method=DELETE" class="d-inline">
+                <button class="btn btn-dark edit-btn">Delete</button>
+              </form>
+            </div>
+            <div class="card-body">
+              <a href="/developers/moreproject/<%= listing.project_by._id %>" class="btn btn-primary">
+                More projects by <%= listing.project_by.name %>
+              </a>
+            </div>
           <% } %>
-        
+        </div>
       </div>
     </div>
   </div>
 
-  
-  <div>
-    <h1>Create A reviews</h1>
+  <div class="review-container">
+    <h1>Create A Review</h1>
     <form method="post" action="/listings/<%=listing._id %>/reviews">
-
       <label for="review[comment]">
-        <h4>Give review,it will help us to provide best service:</h4>
-      </label> <br>
-      <input type="text" name="review[comment]" id="review[comment]">
-      <label for="review[rating]">Give rate out of 5</label>
-      <input type="range" min="1" max="5" name="review[rating]">
-      <button>Submit a review</button>
-
+        <h4>Give a review; it will help us provide better service:</h4>
+      </label>
+      <input type="text" name="review[comment]" id="review[comment]" class="form-control">
+      <label for="review[rating]">Give a rating out of 5</label>
+      <input type="range" min="1" max="5" name="review[rating]" class="form-control">
+      <button class="btn btn-dark">Submit a Review</button>
     </form>
-
   </div>
 
-  <% if (listing.reviews.length>0) { %>
-  <div>
-    <h1>Your reviews</h1>
-    <% for( review of listing.reviews ) { %>
-      <div style="border: 2px solid red; width: 200px; ">
-
-        by @<i>
-          <%=review.givenBy.username%>
-        </i>
-        <p>
-          <% for( let index=0; index < review.rating; index++ ) { %>
-            &#9733;
+  <% if (listing.reviews.length > 0) { %>
+    <div class="review-container">
+      <h1>Your Reviews</h1>
+      <% for (review of listing.reviews) { %>
+        <div class="review-card">
+          <p>by @<i><%=review.givenBy.username%></i></p>
+          <p>
+            <% for (let index = 0; index < review.rating; index++) { %>
+              &#9733;
             <% } %>
-        </p>
-        <p>comment:<%= review.comment %>
-        </p>
-        <% if ( currentUser  && currentUser._id.equals(review.givenBy._id)) { %>
-          <form method="post" action="/listings/<%=listing._id %>/<%=review._id %>/reviews?_method=delete">
-            <button>Delete</button>
-          </form>
-  
+          </p>
+          <p>Comment: <%= review.comment %></p>
+          <% if (currentUser && currentUser._id.equals(review.givenBy._id)) { %>
+            <form method="post" action="/listings/<%=listing._id %>/<%=review._id %>/reviews?_method=delete">
+              <button class="btn btn-dark">Delete</button>
+            </form>
           <% } %>
-        
-      </div> <br>
+        </div>
       <% } %>
-  </div>
-
+    </div>
   <% } %>
-  <br><br>
 
   <hr>
-  <div class="col-6 offset-3 mb-3">
-   <h1> where you will you</h1>
+
+  <div class="map-container">
+    <h1>Where you will find us</h1>
     <div id="map"></div>
   </div>
+</div>
 
 <script src="/js/map.js"></script>
-
-<!-- --legacy-peer-deps -->

@@ -1,15 +1,24 @@
 <%layout("/layouts/boilerplate")%>
 
 <style>
+  a:hover {
+    text-decoration: none;
+  }
   .card {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure cards take full height of their container */
   }
   .card-img-top {
     height: 180px; /* Adjust height as needed */
     object-fit: cover; /* Ensures the image covers the area without distortion */
   }
   .card-body {
-    min-height: 120px; /* Ensures that card body has enough space for content */
+    flex: 1; /* Allows the card body to expand and fill available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   .card-button {
     background-color: #2d3e50; /* Primary color for buttons */
@@ -32,42 +41,55 @@
     display: flex;
     gap: 10px; /* Space between buttons */
   }
+  /* Flexbox grid setup for 3 cards per row */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -15px; /* Negative margin to offset padding on columns */
+  }
+  .col {
+    flex: 1 1 33%; /* 3 columns per row */
+    max-width: 33%;
+    padding: 15px; /* Padding between columns */
+  }
 </style>
 
 <div class="container mt-3">
-  <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 g-4">
+  <div class="row">
     <% for (developer of allDevelopers) { %>
       <div class="col">
-        <div class="card">
-          <img src="<%= developer.logo.url %>" class="card-img-top" alt="developer_logo" />
-          <div class="card-body">
-            <h5 class="card-title"><%= developer.name %></h5>
-            <p class="card-text">
-              <%= developer.description %>
-            </p>
+        <a href="">
+          <div class="card">
+            <img src="<%= developer.logo.url %>" class="card-img-top" alt="developer_logo" />
+            <div class="card-body">
+              <h5 class="card-title"><%= developer.name %></h5>
+              <p class="card-text">
+                <%= developer.description %>
+              </p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Contact Us: <%= developer.contact %></li>
+              <li class="list-group-item"><b>Mail: <%= developer.mail %></b></li>
+              <li class="list-group-item"><b>Visit At: <%= developer.officeAddress %></b></li>
+              <li class="list-group-item"><b>We have our projects in <%= developer.city %></b></li>
+            </ul>
+            <div class="card-body">
+              <a href="/developers/moreproject/<%= developer._id %>" class="btn card-button">Projects by <%= developer.name %></a>
+              <% if (currentUser && currentUser.email=="tejas@gmail.com") { %>
+                <div class="buttons mt-3">
+                  <a href="/developers/<%= developer._id %>/edit" class="btn card-button card-button-secondary">
+                    Edit
+                  </a>
+                  <form method="POST" action="/developers/<%= developer._id %>/?_method=DELETE" class="d-inline">
+                    <button type="submit" class="btn card-button card-button-secondary">
+                      Delete
+                    </button>
+                  </form>
+                </div>
+              <% } %>
+            </div>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Contact Us: <%= developer.contact %></li>
-            <li class="list-group-item"><b>Mail: <%= developer.mail %></b></li>
-            <li class="list-group-item"><b>Visit At: <%= developer.officeAddress %></b></li>
-            <li class="list-group-item"><b>We have our projects in <%= developer.city %></b></li>
-          </ul>
-          <div class="card-body">
-            <a href="/developers/moreproject/<%= developer._id %>" class="btn card-button">Projects by <%= developer.name %></a>
-            <% if (currentUser && developer.user && currentUser._id.equals(developer.user._id)) { %>
-              <div class="buttons mt-3">
-                <a href="/developers/<%= developer._id %>/edit" class="btn card-button card-button-secondary">
-                  Edit
-                </a>
-                <form method="POST" action="/developers/<%= developer._id %>/?_method=DELETE" class="d-inline">
-                  <button type="submit" class="btn card-button card-button-secondary">
-                    Delete
-                  </button>
-                </form>
-              </div>
-            <% } %>
-          </div>
-        </div>
+        </a>
       </div>
     <% } %>
   </div>
