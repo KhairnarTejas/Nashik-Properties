@@ -96,12 +96,13 @@
                 <button class="btn btn-dark edit-btn">Delete</button>
               </form>
             </div>
-            <div class="card-body">
-              <a href="/developers/moreproject/<%= listing.project_by._id %>" class="btn btn-primary">
-                More projects by <%= listing.project_by.name %>
-              </a>
-            </div>
+         
           <% } %>
+          <div class="card-body">
+            <a href="/developers/moreproject/<%= listing.project_by._id %>" class="btn btn-primary">
+              More projects by <%= listing.project_by.name %>
+            </a>
+          </div>
         </div>
       </div>
     </div>

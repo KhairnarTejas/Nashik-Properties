@@ -71,10 +71,21 @@ module.exports.showListing = async (req, res) => {
     const listing = await Listing.findById(id)
     .populate({
         path: "reviews",
-        populate:{
+        populate: {
             path: "givenBy"
-        },
+        }
+    })
+    .populate({
+        path: "project_by",
+        model: "Developer" // Ensure this matches the referenced model
     });
+    // const listing = await Listing.findById(id)
+    // .populate({
+    //     path: "reviews",
+    //     populate:{
+    //         path: "givenBy"
+    //     },
+    // });
 
     res.render("listings/show.ejs", {
         listing
