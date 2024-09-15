@@ -1,22 +1,24 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
+  /* Card styling */
   .card {
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for a modern look */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
   }
 
   .card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05); /* Subtle scale on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
   }
 
+  /* Image styling */
   .card-img-top {
-    height: 200px; /* Adjust based on your design preference */
-    object-fit: cover;
+    height: 200px; /* Uniform height for images */
+    object-fit: cover; /* Maintain aspect ratio and cover the available area */
   }
 
   .card-body {
@@ -26,19 +28,26 @@
   .card-title {
     font-size: 1.25rem;
     margin-bottom: 10px;
+    color: #333;
+    font-weight: bold; /* Stronger emphasis on titles */
   }
 
   .card-text {
     margin-bottom: 15px;
+    color: #555; /* Slightly muted text color */
   }
 
+  /* List item styling */
   .list-group-item {
     border: none;
     padding: 10px 15px;
+    font-size: 0.9rem; /* Slightly smaller font for list items */
+    background-color: #f9f9f9; /* Light background for differentiation */
   }
 
+  /* Button styling */
   .btn-primary {
-    background-color: #007bff;
+    background-color: #007bff; /* Bootstrap primary color */
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
@@ -46,41 +55,51 @@
     text-align: center;
     display: block;
     text-decoration: none;
+    transition: background-color 0.3s ease;
   }
 
   .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Darker blue on hover */
   }
 
+  /* Responsive grid layout */
   .row {
     display: flex;
     flex-wrap: wrap;
-    margin: -15px;
+    margin: -15px; /* Adjust margins to ensure correct spacing */
   }
 
   .col-lg-4, .col-md-4, .col-sm-12 {
     padding: 15px;
   }
 
+  /* For larger screens */
   @media (min-width: 992px) {
     .col-lg-4 {
-      flex: 0 0 calc(33.333% - 30px);
+      flex: 0 0 calc(33.333% - 30px); /* 3 columns */
       max-width: calc(33.333% - 30px);
     }
   }
 
+  /* For medium-sized screens */
   @media (max-width: 991px) {
     .col-md-4 {
-      flex: 0 0 calc(50% - 30px);
+      flex: 0 0 calc(50% - 30px); /* 2 columns */
       max-width: calc(50% - 30px);
     }
   }
 
+  /* For small screens */
   @media (max-width: 767px) {
     .col-sm-12 {
-      flex: 0 0 100%;
+      flex: 0 0 100%; /* Full width */
       max-width: 100%;
     }
+  }
+
+  /* Adjust container spacing */
+  .container {
+    padding-top: 30px;
   }
 </style>
 
@@ -88,7 +107,7 @@
   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
     <% for (let listing of allListings) { %>
       <div class="col">
-        <a href="/listings/<%= listing._id %>">
+        <a href="/listings/<%= listing._id %>" style="text-decoration: none;">
           <div class="card">
             <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
             <div class="card-body">

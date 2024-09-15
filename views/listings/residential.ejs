@@ -1,50 +1,98 @@
-<%layout("/layouts/boilerplate")%>
+<% layout("/layouts/boilerplate") %>
 
 <style>
+  /* Card styling */
   .card {
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Softer shadow for modern look */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
   }
+
   .card:hover {
-    transform: scale(1.02);
+    transform: scale(1.05); /* Slight scaling on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
   }
+
   .card-img-top {
     height: 200px;
-    object-fit: cover;
+    object-fit: cover; /* Ensures image maintains aspect ratio */
   }
+
   .card-body {
-    padding: 15px;
+    padding: 20px;
   }
+
   .card-title {
     font-size: 1.25rem;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    color: #2d3e50; /* Custom color for title */
+    font-weight: bold;
   }
+
   .card-text {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    color: #6c757d; /* Muted color for text */
   }
+
+  /* Button styling */
   .btn-primary {
-    background-color: #007bff;
+    background-color: #2d3e50; /* Custom button color */
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
     color: #fff;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
   }
+
   .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #1a2c40; /* Darker shade on hover */
   }
+
   .list-group-item {
     border: none;
     padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+
+  /* Responsive grid layout */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Add space between cards */
+  }
+
+  .col {
+    flex: 1 1 calc(33.333% - 20px); /* 3 columns on larger screens */
+    max-width: calc(33.333% - 20px);
+  }
+
+  @media (max-width: 992px) {
+    .col {
+      flex: 1 1 calc(50% - 20px); /* 2 columns on medium screens */
+      max-width: calc(50% - 20px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .col {
+      flex: 1 1 100%; /* Full width on smaller screens */
+      max-width: 100%;
+    }
+  }
+
+  /* Add spacing to the container */
+  .container {
+    padding-top: 30px;
   }
 </style>
 
 <div class="container mt-3">
-  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+  <div class="row">
     <% for (listing of allListings) { %>
       <div class="col">
-        <a href="/listings/<%=listing._id%>">
+        <a href="/listings/<%=listing._id%>" style="text-decoration: none;">
           <div class="card">
             <img src="<%=listing.image.url%>" class="card-img-top" alt="listing_image" />
             <div class="card-body">

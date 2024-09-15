@@ -3,15 +3,22 @@
 <style>
   .card {
     margin-bottom: 20px;
-    border: 1px solid #ccc;
+    border: none; /* Remove default border */
     border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for a modern look */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition */
+  }
+
+  .card:hover {
+    transform: scale(1.05); /* Slightly enlarge the card on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
   }
 
   .card img {
     width: 100%;
-    height: auto;
-    display: block;
+    height: 200px; /* Set a fixed height for images */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
     border-bottom: 1px solid #ccc;
   }
 
@@ -21,56 +28,88 @@
 
   .card-title {
     margin-top: 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2d3e50; /* Custom title color */
   }
 
   .card-text {
     margin-bottom: 20px;
+    color: #6c757d; /* Custom text color */
   }
 
   .list-group-item {
     border-top: none;
+    font-size: 0.9rem; /* Smaller font size for the list */
   }
 
   .btn-primary {
     width: 100%;
+    background-color: #2d3e50;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
   }
 
+  .btn-primary:hover {
+    background-color: #1a2c40; /* Darker shade on hover */
+  }
+
+  /* Responsive flexbox grid */
   .row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-right: -15px;
-    margin-left: -15px;
+    margin: -15px;
   }
 
   .col-lg-4 {
-    flex: 0 0 calc(33.333% - 30px);
-    max-width: calc(33.333% - 30px);
-    padding-right: 15px;
-    padding-left: 15px;
+    flex: 1 1 33.333%; /* 3 columns per row */
+    max-width: 33.333%;
+    padding: 15px;
+  }
+
+  /* Responsive layout for smaller screens */
+  @media (max-width: 992px) {
+    .col-lg-4 {
+      flex: 1 1 50%; /* 2 columns per row */
+      max-width: 50%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .col-lg-4 {
+      flex: 1 1 100%; /* 1 column per row */
+      max-width: 100%;
+    }
+  }
+
+  /* Add spacing around container */
+  .container {
+    padding-top: 30px;
   }
 </style>
 
 <div class="container mt-3">
   <div class="row">
     <% for (let i = 0; i < allListings.length; i++) { %>
-    <a href="/listings/<%=allListings[i]._id%>">
+      <a href="/listings/<%=allListings[i]._id%>" style="text-decoration: none;">
         <div class="col-lg-4">
-            <div class="card">
-              <img src="<%= allListings[i].image.url %>" class="card-img-top" alt="listing_image">
-              <div class="card-body">
-                <h5 class="card-title"><%= allListings[i].title %></h5>
-                <p class="card-text"><%= allListings[i].description %></p>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item"><%= allListings[i].location %></li>
-                <li class="list-group-item"><b><%= allListings[i].project_by.name %></b></li>
-              </ul>
-              
+          <div class="card">
+            <img src="<%= allListings[i].image.url %>" class="card-img-top" alt="listing_image">
+            <div class="card-body">
+              <h5 class="card-title"><%= allListings[i].title %></h5>
+              <p class="card-text"><%= allListings[i].description %></p>
             </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><%= allListings[i].location %></li>
+              <li class="list-group-item"><b><%= allListings[i].project_by.name %></b></li>
+            </ul>
           </div>
-
-    </a>
+        </div>
+      </a>
     <% } %>
   </div>
 </div>
