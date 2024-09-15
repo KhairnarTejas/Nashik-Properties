@@ -4,57 +4,113 @@
   a:hover {
     text-decoration: none;
   }
+
   .card {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    height: 100%; /* Ensure cards take full height of their container */
+    height: 100%;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for a modern look */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition */
   }
+
+  .card:hover {
+    transform: scale(1.05); /* Slightly enlarges the card on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+  }
+
   .card-img-top {
-    height: 180px; /* Adjust height as needed */
-    object-fit: cover; /* Ensures the image covers the area without distortion */
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
+
   .card-body {
-    flex: 1; /* Allows the card body to expand and fill available space */
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2d3e50;
+  }
+
+  .card-text {
+    color: #6c757d;
+    margin-bottom: 10px;
+  }
+
+  .list-group-item {
+    font-size: 0.9rem;
+  }
+
   .card-button {
-    background-color: #2d3e50; /* Primary color for buttons */
-    color: white; /* Text color for buttons */
-    border: none; /* Removes border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px 15px; /* Padding inside buttons */
+    background-color: #2d3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
   }
+
   .card-button:hover {
-    background-color: #1a2c40; /* Darker shade for hover effect */
+    background-color: #1a2c40;
   }
+
   .card-button-secondary {
-    background-color: #6c757d; /* Secondary color for buttons */
-    color: white; /* Text color for secondary buttons */
+    background-color: #6c757d;
+    color: white;
   }
+
   .card-button-secondary:hover {
-    background-color: #5a6268; /* Darker shade for hover effect */
+    background-color: #5a6268;
   }
+
   .buttons {
     display: flex;
-    gap: 10px; /* Space between buttons */
+    gap: 10px;
   }
-  /* Flexbox grid setup for 3 cards per row */
+
+  /* Responsive flexbox grid */
   .row {
     display: flex;
     flex-wrap: wrap;
-    margin: -15px; /* Negative margin to offset padding on columns */
+    margin: -15px;
   }
+
   .col {
-    flex: 1 1 33%; /* 3 columns per row */
-    max-width: 33%;
-    padding: 15px; /* Padding between columns */
+    flex: 1 1 33.33%;
+    max-width: 33.33%;
+    padding: 15px;
+  }
+
+  /* Responsive layout for smaller screens */
+  @media (max-width: 992px) {
+    .col {
+      flex: 1 1 50%;
+      max-width: 50%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .col {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+  }
+
+  /* Add some extra styling for container and headers */
+  .container {
+    padding-top: 30px;
   }
 </style>
 
-<div class="container mt-3">
+<div class="container">
   <div class="row">
     <% for (developer of allDevelopers) { %>
       <div class="col">
